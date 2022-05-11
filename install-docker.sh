@@ -31,6 +31,7 @@ function docker_compose() {
     1)
       $PACKAGE install docker-compose-plugin -y ;;
     2)
+      rm -f /usr/local/bin/docker-compose
       curl -SL $(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep -o -m 1 "https.*linux-x86_64") -o /usr/local/bin/docker-compose
       chmod +x /usr/local/bin/docker-compose ;;
     0)
