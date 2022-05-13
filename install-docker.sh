@@ -3,7 +3,7 @@
 #requirement
 # ubuntu / debian = sudo apt install curl
 # rhel / centos = sudo yum install curl
-# How To Use => curl -sL "https://bit.ly/DockerNata | sudo bash -s <ubuntu/debian/centos> <-wdc/--docker-compose/-dco/--compose-only> <1/2>"
+# How To Use => bash <(curl -sL "https://bit.ly/DockerNata") <ubuntu/debian/centos> <-wdc/--docker-compose/-dco/--compose-only> <1/2>"
 
 function install_docker() {
   case $DISTRO in
