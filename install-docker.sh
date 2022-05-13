@@ -79,7 +79,6 @@ case "$2" in #$2 -> Flags
     docker_compose $3
     ;;
   *)
-    #install_docker "$DISTRO"
-    echo "ye"
+    install_docker "$DISTRO"
     ;;
 esac
