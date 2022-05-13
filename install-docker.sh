@@ -5,7 +5,7 @@
 # rhel / centos = sudo yum install curl
 # How To Use => bash <(curl -sL "https://bit.ly/DockerNata") <ubuntu/debian/centos> <-wdc/--docker-compose/-dco/--compose-only> <1/2>"
 
-function install_docker() {
+install_docker() {
   case $DISTRO in
     ubuntu | debian)
       PACKAGE="apt"
@@ -27,13 +27,13 @@ function install_docker() {
   esac
 }
 
-function docker_compose() {
+docker_compose() {
   case "$1" in
     1)
       sudo $PACKAGE install docker-compose-plugin -y ;;
     2)
       sudo rm -f /usr/local/bin/docker-compose
-      sudo curl -SL "$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep -o -m 1 "https.*linux-x86_64")" -o /usr/local/bin/docker-compose
+      sudo curl -SL "$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep -o -m 1 "https.*linux-$(uname -m)")" -o /usr/local/bin/docker-compose
       sudo chmod +x /usr/local/bin/docker-compose ;;
     0)
       exit 0;;
