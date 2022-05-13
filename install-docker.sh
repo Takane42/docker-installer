@@ -24,6 +24,12 @@ install_docker() {
       sudo yum-config-manager --add-repo https://download.docker.com/linux/$DISTRO/docker-ce.repo
       sudo yum install docker-ce docker-ce-cli containerd.io -y
       ;;
+    fedora)
+      PACKAGE="dnf"
+      sudo dnf remove docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-engine docker-engine-selinux docker-selinux -y
+      sudo dnf -y install dnf-plugins-core
+      sudo dnf-config-manager --add-repo https://download.docker.com/linux/$DISTRO/docker-ce.repo
+      sudo dnf install docker-ce docker-ce-cli containerd.io -y
   esac
 }
 
@@ -55,6 +61,15 @@ if [ -z $DISTRO ] || [[ $DISTRO == *"-"* ]] ; then
     exit
 fi
 
+if [ "$(sudo systemctl is-active docker)" == "active" ] ; then
+    echo "Docker is Already Installed"
+    read -r -p "Continue? (Y/n) : " docker_option
+    if [ $docker_option == n ] ; then
+      echo "Install Canceled";
+      exit 1
+    fi
+fi
+
 case "$2" in #$2 -> Flags
   -wdc|--docker-compose)
     install_docker "$DISTRO"
@@ -64,6 +79,7 @@ case "$2" in #$2 -> Flags
     docker_compose $3
     ;;
   *)
-    install_docker "$DISTRO"
+    #install_docker "$DISTRO"
+    echo "ye"
     ;;
 esac
