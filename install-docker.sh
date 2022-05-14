@@ -6,6 +6,9 @@
 # How To Use => bash <(curl -sL "https://bit.ly/DockerNata") <ubuntu/debian/centos> <-wdc/--docker-compose/-dco/--compose-only> <1/2>"
 
 install_docker() {
+echo "======================="
+echo "1. Installing Docker"
+echo "======================="
   case $DISTRO in
     ubuntu | debian)
       PACKAGE="apt"
@@ -34,6 +37,9 @@ install_docker() {
 }
 
 docker_compose() {
+echo "================================"
+echo "2. Installing Docker-Compose"
+echo "================================"
   case "$1" in
     1)
       sudo $PACKAGE install docker-compose-plugin -y ;;
