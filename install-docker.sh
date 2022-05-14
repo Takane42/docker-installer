@@ -62,7 +62,7 @@ echo "================================"
 #DISTRO=$(lsb_release -i | awk '{print tolower($3)}')
 DISTRO=$1
 
-if [ -z $DISTRO ] || [[ $DISTRO == *"-"* ]] ; then
+if [[ -z $DISTRO ||  $DISTRO == *"-"* ]] ; then
     echo "Please Specify Linux Distribution";
     exit
 fi
