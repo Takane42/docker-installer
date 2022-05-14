@@ -67,10 +67,9 @@ if [[ -z $DISTRO ||  $DISTRO == *"-"* ]] ; then
     exit
 fi
 
-# Need 3 arguments but get 2 cause idk how to use bash in this case :/
-# if docker exist and docker-compose flag is set. need to skip this check ( -dco and --compose-only )
+# Need Review on this code
 
-if [ "$(sudo systemctl is-active docker)" == "active" ] && [ ! "$2" == "-dco" ]; then
+if [ "$(sudo systemctl is-active docker)" == "active" ] && [ ! "$2" == "-dco" ] && [ ! "$2" == "--compose-only" ]; then
     echo "Docker is Already Installed"
     read -r -p "Reinstall Docker? (Y/n) : " docker_option
     if [ "$docker_option" == n ] ; then
