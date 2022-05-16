@@ -6,9 +6,9 @@
 # How To Use => bash <(curl -sL "https://bit.ly/DockerNata") <ubuntu/debian/centos> <-wdc/--docker-compose/-dco/--compose-only> <1/2>"
 
 install_docker() {
-echo "======================="
+echo "================================"
 echo "1. Installing Docker"
-echo "======================="
+echo "================================"
   case $DISTRO in
     ubuntu | debian)
       PACKAGE="apt"
@@ -39,8 +39,14 @@ echo "======================="
 docker_compose() {
   case "$1" in
     1)
+      echo "================================"
+      echo "2. Installing Docker-Compose"
+      echo "================================"
       sudo $PACKAGE install docker-compose-plugin -y ;;
     2)
+      echo "================================"
+      echo "2. Installing Docker-Compose"
+      echo "================================"
       sudo rm -f /usr/local/bin/docker-compose
       sudo curl -SL "$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep -o -m 1 "https.*linux-$(uname -m)")" -o /usr/local/bin/docker-compose
       sudo chmod +x /usr/local/bin/docker-compose ;;
@@ -48,7 +54,7 @@ docker_compose() {
       exit 0;;
     *)
       echo "================================"
-      echo "2. Installing Docker-Compose"
+      echo "2. Docker-Compose"
       echo "================================"
       echo "Please Choose the correct option"
       echo " 1) via package-manager"
@@ -58,6 +64,12 @@ docker_compose() {
       docker_compose "$OPTION"
   esac
 }
+
+#Entry Point
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m'
 
 #DISTRO=$(lsb_release -i | awk '{print tolower($3)}')
 DISTRO=$1
@@ -73,7 +85,7 @@ if [ "$(sudo systemctl is-active docker)" == "active" ] && [ ! "$2" == "-dco" ] 
     echo "Docker is Already Installed"
     read -r -p "Reinstall Docker? (Y/n) : " docker_option
     if [ "$docker_option" == n ] ; then
-      echo "Install Canceled";
+      echo -e "${RED}INSTALLATION CANCELED${NC}\n"
       exit 1
     fi
 fi
@@ -82,11 +94,14 @@ case "$2" in #$2 -> Flags
   -wdc|--docker-compose)
     install_docker "$DISTRO"
     docker_compose "$3"
+    echo -e "${GREEN}INSTALLATION COMPLETE${NC}\n"
     ;;
   -dco|--compose-only)
     docker_compose "$3"
+    echo -e "${GREEN}INSTALLATION COMPLETE${NC}\n"
     ;;
   *)
     install_docker "$DISTRO"
+    echo -e "${GREEN}INSTALLATION COMPLETE${NC}\n"
     ;;
 esac
